@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Trip Cost Calculator | Nagpur to Hyderabad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4ade80;
+            --warning: #facc15;
+            --danger: #f87171;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            color: white;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .route-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+        
+        .route-info i {
+            font-size: 1.5rem;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent);
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            width: auto;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #ef4444, #dc2626);
+        }
+        
+        .btn-success {
+            background: linear-gradient(to right, #10b981, #059669);
+        }
+        
+        .crud-section {
+            margin-top: 25px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .input-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .list-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.3s;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item:hover {
+            background-color: #f8fafc;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .item-cost {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .results-table th, .results-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .results-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .results-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .cost-summary {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .per-person-cost {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 15px 0;
+        }
+        
+        .map-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .map-placeholder {
+            height: 200px;
+            background: linear-gradient(to right, #c7d2fe, #bfdbfe);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.3) 50%, transparent 51%),
+                linear-gradient(transparent 49%, rgba(255,255,255,0.3) 50%, transparent 51%);
+            background-size: 30px 30px;
+        }
+        
+        .map-placeholder i {
+            font-size: 3rem;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .note {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #64748b;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-road"></i> Road Trip Cost Calculator</h1>
+            <p class="subtitle">Plan your journey from Nagpur to Hyderabad with precision</p>
+            <div class="route-info">
+                <i class="fas fa-location-dot" style="color: #ef4444;"></i>
+                <span>Nagpur → Hyderabad (Approx 500 km)</span>
+                <i class="fas fa-location-dot" style="color: #10b981;"></i>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-car"></i> Trip Details</h2>
+                
+                <div class="input-group">
+                    <label for="distance">Distance (km)</label>
+                    <input type="number" id="distance" value="500" min="1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="fuelPrice">Fuel Price (₹ per liter)</label>
+                    <input type="number" id="fuelPrice" value="100" min="1" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="mileage">Mileage (km per liter)</label>
+                    <input type="number" id="mileage" value="15" min="1" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="tollCharges">Toll Charges (₹)</label>
+                    <input type="number" id="tollCharges" value="1200" min="0">
+                </div>
+                
+                <div class="input-group">
+                    <label for="hotelCost">Hotel Cost per Night (₹)</label>
+                    <input type="number" id="hotelCost" value="4000" min="0">
+                </div>
+                
+                <div class="input-group">
+                    <label for="nights">Number of Nights</label>
+                    <input type="number" id="nights" value="2" min="0">
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-utensils"></i> Food Expenses</h2>
+                
+                <div class="crud-section">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="foodName">Meal Type</label>
+                            <input type="text" id="foodName" placeholder="e.g., Breakfast, Lunch, Dinner">
+                        </div>
+                        <div class="input-group">
+                            <label for="foodCost">Cost (₹)</label>
+                            <input type="number" id="foodCost" placeholder="Enter amount" min="0">
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="addFoodItem()">
+                        <i class="fas fa-plus"></i> Add Food Expense
+                    </button>
+                    
+                    <div class="list-container" id="foodList">
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-name">Dinner (Day 1)</div>
+                                <div class="item-cost">₹1,200</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-name">Breakfast (Day 2)</div>
+                                <div class="item-cost">₹800</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-ticket-alt"></i> Extra Activities</h2>
+                
+                <div class="crud-section">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="activityName">Activity Name</label>
+                            <input type="text" id="activityName" placeholder="e.g., Snow World, Museum">
+                        </div>
+                        <div class="input-group">
+                            <label for="activityCost">Cost per Person (₹)</label>
+                            <input type="number" id="activityCost" placeholder="Enter amount" min="0">
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="addActivity()">
+                        <i class="fas fa-plus"></i> Add Activity
+                    </button>
+                    
+                    <div class="list-container" id="activityList">
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-name">Snow World Entry</div>
+                                <div class="item-cost">₹800 per person</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-name">Boat Ride</div>
+                                <div class="item-cost">₹300 per person</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-calculator"></i> Trip Cost Summary</h2>
+            
+            <button class="btn" onclick="calculateCost()">
+                <i class="fas fa-calculator"></i> Calculate Total Cost
+            </button>
+            
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Expense Type</th>
+                        <th>Amount (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fuel Cost</td>
+                        <td id="fuelCost">3,333.33</td>
+                    </tr>
+                    <tr>
+                        <td>Toll Charges</td>
+                        <td id="tollCost">1,200.00</td>
+                    </tr>
+                    <tr>
+                        <td>Hotel Cost</td>
+                        <td id="hotelTotal">8,000.00</td>
+                    </tr>
+                    <tr>
+                        <td>Food Cost</td>
+                        <td id="foodTotal">2,000.00</td>
+                    </tr>
+                    <tr>
+                        <td>Activity Cost</td>
+                        <td id="activityTotal">6,600.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Total Trip Cost</td>
+                        <td id="totalCost">21,133.33</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="cost-summary">
+                <p>Total cost for 6 people</p>
+                <div class="per-person-cost" id="perPerson">₹3,522.22</div>
+                <p>Cost per person</p>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <h2 class="card-title"><i class="fas fa-map"></i> Trip Route</h2>
+            <p>Nagpur → Adilabad → Nirmal → Hyderabad (NH44)</p>
+            <div class="map-placeholder">
+                <i class="fas fa-route"></i>
+            </div>
+        </div>
+        
+        <div class="note">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> Travel Tips</h2>
+            <ul style="padding-left: 25px; margin-top: 15px;">
+                <li style="margin-bottom: 10px;">The distance between Nagpur and Hyderabad is approximately 500 km via NH44</li>
+                <li style="margin-bottom: 10px;">The journey typically takes 8-9 hours by car</li>
+                <li style="margin-bottom: 10px;">Consider adding a 10-15% buffer for unexpected expenses</li>
+                <li>Popular attractions in Hyderabad: Charminar, Golconda Fort, Hussain Sagar Lake, and Snow World</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Road Trip Cost Calculator | Designed for Nagpur to Hyderabad Journey</p>
+            <p>© 2023 Travel Planner | All calculations are estimates</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Food items array
+        const foodItems = [
+            { name: "Dinner (Day 1)", cost: 1200 },
+            { name: "Breakfast (Day 2)", cost: 800 }
+        ];
+        
+        // Activities array
+        const activities = [
+            { name: "Snow World Entry", cost: 800 },
+            { name: "Boat Ride", cost: 300 }
+        ];
+        
+        // Render food items
+        function renderFoodItems() {
+            const container = document.getElementById('foodList');
+            container.innerHTML = '';
+            
+            foodItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'list-item';
+                itemElement.innerHTML = `
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-cost">₹${item.cost.toLocaleString('en-IN')}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-sm" style="background: #a5b4fc;" onclick="editFoodItem(${index})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteFoodItem(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+        }
+        
+        // Render activities
+        function renderActivities() {
+            const container = document.getElementById('activityList');
+            container.innerHTML = '';
+            
+            activities.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'list-item';
+                itemElement.innerHTML = `
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-cost">₹${item.cost.toLocaleString('en-IN')} per person</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-sm" style="background: #a5b4fc;" onclick="editActivity(${index})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteActivity(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+        }
+        
+        // Add food item
+        function addFoodItem() {
+            const nameInput = document.getElementById('foodName');
+            const costInput = document.getElementById('foodCost');
+            
+            if (nameInput.value.trim() === '' || costInput.value === '') {
+                alert('Please enter both meal type and cost');
+                return;
+            }
+            
+            foodItems.push({
+                name: nameInput.value.trim(),
+                cost: parseFloat(costInput.value)
+            });
+            
+            renderFoodItems();
+            
+            // Reset inputs
+            nameInput.value = '';
+            costInput.value = '';
+        }
+        
+        // Add activity
+        function addActivity() {
+            const nameInput = document.getElementById('activityName');
+            const costInput = document.getElementById('activityCost');
+            
+            if (nameInput.value.trim() === '' || costInput.value === '') {
+                alert('Please enter both activity name and cost');
+                return;
+            }
+            
+            activities.push({
+                name: nameInput.value.trim(),
+                cost: parseFloat(costInput.value)
+            });
+            
+            renderActivities();
+            
+            // Reset inputs
+            nameInput.value = '';
+            costInput.value = '';
+        }
+        
+        // Edit food item
+        function editFoodItem(index) {
+            const newName = prompt('Enter new meal name:', foodItems[index].name);
+            if (newName === null) return;
+            
+            const newCost = prompt('Enter new cost:', foodItems[index].cost);
+            if (newCost === null) return;
+            
+            foodItems[index] = {
+                name: newName.trim(),
+                cost: parseFloat(newCost)
+            };
+            
+            renderFoodItems();
+        }
+        
+        // Edit activity
+        function editActivity(index) {
+            const newName = prompt('Enter new activity name:', activities[index].name);
+            if (newName === null) return;
+            
+            const newCost = prompt('Enter new cost per person:', activities[index].cost);
+            if (newCost === null) return;
+            
+            activities[index] = {
+                name: newName.trim(),
+                cost: parseFloat(newCost)
+            };
+            
+            renderActivities();
+        }
+        
+        // Delete food item
+        function deleteFoodItem(index) {
+            if (confirm('Are you sure you want to delete this food expense?')) {
+                foodItems.splice(index, 1);
+                renderFoodItems();
+            }
+        }
+        
+        // Delete activity
+        function deleteActivity(index) {
+            if (confirm('Are you sure you want to delete this activity?')) {
+                activities.splice(index, 1);
+                renderActivities();
+            }
+        }
+        
+        // Calculate total cost
+        function calculateCost() {
+            // Get input values
+            const distance = parseFloat(document.getElementById('distance').value) || 0;
+            const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
+            const mileage = parseFloat(document.getElementById('mileage').value) || 0;
+            const tollCharges = parseFloat(document.getElementById('tollCharges').value) || 0;
+            const hotelCost = parseFloat(document.getElementById('hotelCost').value) || 0;
+            const nights = parseFloat(document.getElementById('nights').value) || 0;
+            
+            // Calculate costs
+            const fuelCost = (distance / mileage) * fuelPrice;
+            const hotelTotal = hotelCost * nights;
+            
+            // Sum food costs
+            const foodTotal = foodItems.reduce((sum, item) => sum + item.cost, 0);
+            
+            // Sum activity costs (multiplied by 6 people)
+            const activityTotal = activities.reduce((sum, item) => sum + item.cost, 0) * 6;
+            
+            const totalCost = fuelCost + tollCharges + hotelTotal + foodTotal + activityTotal;
+            const perPerson = totalCost / 6;
+            
+            // Display results
+            document.getElementById('fuelCost').textContent = fuelCost.toFixed(2);
+            document.getElementById('tollCost').textContent = tollCharges.toFixed(2);
+            document.getElementById('hotelTotal').textContent = hotelTotal.toFixed(2);
+            document.getElementById('foodTotal').textContent = foodTotal.toFixed(2);
+            document.getElementById('activityTotal').textContent = activityTotal.toFixed(2);
+            document.getElementById('totalCost').textContent = totalCost.toFixed(2);
+            document.getElementById('perPerson').textContent = '₹' + perPerson.toFixed(2);
+        }
+        
+        // Initialize the app
+        window.onload = function() {
+            renderFoodItems();
+            renderActivities();
+            calculateCost();
+        };
+    </script>
+</body>
+</html>
