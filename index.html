@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Road Trip Cost Calculator | Nagpur to Hyderabad</title>
+    <title>Road Trip Calculator | Nagpur to Hyderabad</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -331,6 +331,18 @@
             color: #64748b;
         }
         
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+        
         @media (max-width: 768px) {
             .content {
                 grid-template-columns: 1fr;
@@ -365,32 +377,37 @@
                 
                 <div class="input-group">
                     <label for="distance">Distance (km)</label>
-                    <input type="number" id="distance" value="500" min="1">
+                    <input type="number" id="distance" min="1" placeholder="Enter distance">
                 </div>
                 
                 <div class="input-group">
                     <label for="fuelPrice">Fuel Price (₹ per liter)</label>
-                    <input type="number" id="fuelPrice" value="100" min="1" step="0.1">
+                    <input type="number" id="fuelPrice" min="1" step="0.1" placeholder="Enter fuel price">
                 </div>
                 
                 <div class="input-group">
                     <label for="mileage">Mileage (km per liter)</label>
-                    <input type="number" id="mileage" value="15" min="1" step="0.1">
+                    <input type="number" id="mileage" min="1" step="0.1" placeholder="Enter mileage">
                 </div>
                 
                 <div class="input-group">
                     <label for="tollCharges">Toll Charges (₹)</label>
-                    <input type="number" id="tollCharges" value="1200" min="0">
+                    <input type="number" id="tollCharges" min="0" placeholder="Enter toll charges">
                 </div>
                 
                 <div class="input-group">
                     <label for="hotelCost">Hotel Cost per Night (₹)</label>
-                    <input type="number" id="hotelCost" value="4000" min="0">
+                    <input type="number" id="hotelCost" min="0" placeholder="Enter hotel cost">
                 </div>
                 
                 <div class="input-group">
                     <label for="nights">Number of Nights</label>
-                    <input type="number" id="nights" value="2" min="0">
+                    <input type="number" id="nights" min="0" placeholder="Enter number of nights">
+                </div>
+                
+                <div class="input-group">
+                    <label for="people">Number of People</label>
+                    <input type="number" id="people" min="1" value="6" placeholder="Enter number of people">
                 </div>
             </div>
             
@@ -413,25 +430,9 @@
                     </button>
                     
                     <div class="list-container" id="foodList">
-                        <div class="list-item">
-                            <div class="item-details">
-                                <div class="item-name">Dinner (Day 1)</div>
-                                <div class="item-cost">₹1,200</div>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <div class="item-details">
-                                <div class="item-name">Breakfast (Day 2)</div>
-                                <div class="item-cost">₹800</div>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                            </div>
+                        <div class="empty-state">
+                            <i class="fas fa-utensils"></i>
+                            <p>No food expenses added yet</p>
                         </div>
                     </div>
                 </div>
@@ -456,25 +457,9 @@
                     </button>
                     
                     <div class="list-container" id="activityList">
-                        <div class="list-item">
-                            <div class="item-details">
-                                <div class="item-name">Snow World Entry</div>
-                                <div class="item-cost">₹800 per person</div>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <div class="item-details">
-                                <div class="item-name">Boat Ride</div>
-                                <div class="item-cost">₹300 per person</div>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn btn-sm" style="background: #a5b4fc;"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                            </div>
+                        <div class="empty-state">
+                            <i class="fas fa-ticket-alt"></i>
+                            <p>No activities added yet</p>
                         </div>
                     </div>
                 </div>
@@ -498,34 +483,34 @@
                 <tbody>
                     <tr>
                         <td>Fuel Cost</td>
-                        <td id="fuelCost">3,333.33</td>
+                        <td id="fuelCost">0.00</td>
                     </tr>
                     <tr>
                         <td>Toll Charges</td>
-                        <td id="tollCost">1,200.00</td>
+                        <td id="tollCost">0.00</td>
                     </tr>
                     <tr>
                         <td>Hotel Cost</td>
-                        <td id="hotelTotal">8,000.00</td>
+                        <td id="hotelTotal">0.00</td>
                     </tr>
                     <tr>
                         <td>Food Cost</td>
-                        <td id="foodTotal">2,000.00</td>
+                        <td id="foodTotal">0.00</td>
                     </tr>
                     <tr>
                         <td>Activity Cost</td>
-                        <td id="activityTotal">6,600.00</td>
+                        <td id="activityTotal">0.00</td>
                     </tr>
                     <tr class="total-row">
                         <td>Total Trip Cost</td>
-                        <td id="totalCost">21,133.33</td>
+                        <td id="totalCost">0.00</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="cost-summary">
-                <p>Total cost for 6 people</p>
-                <div class="per-person-cost" id="perPerson">₹3,522.22</div>
+                <p>Total cost for <span id="peopleCount">6</span> people</p>
+                <div class="per-person-cost" id="perPerson">₹0.00</div>
                 <p>Cost per person</p>
             </div>
         </div>
@@ -555,24 +540,88 @@
     </div>
     
     <script>
-        // Food items array
-        const foodItems = [
-            { name: "Dinner (Day 1)", cost: 1200 },
-            { name: "Breakfast (Day 2)", cost: 800 }
-        ];
+        // Data storage using localStorage
+        let tripData = {
+            distance: 500,
+            fuelPrice: 100,
+            mileage: 15,
+            tollCharges: 1200,
+            hotelCost: 4000,
+            nights: 2,
+            people: 6,
+            foodItems: [],
+            activities: []
+        };
         
-        // Activities array
-        const activities = [
-            { name: "Snow World Entry", cost: 800 },
-            { name: "Boat Ride", cost: 300 }
-        ];
+        // Initialize the app
+        function initApp() {
+            // Load saved data from localStorage
+            const savedData = localStorage.getItem('roadTripData');
+            if (savedData) {
+                tripData = JSON.parse(savedData);
+            }
+            
+            // Populate input fields
+            document.getElementById('distance').value = tripData.distance;
+            document.getElementById('fuelPrice').value = tripData.fuelPrice;
+            document.getElementById('mileage').value = tripData.mileage;
+            document.getElementById('tollCharges').value = tripData.tollCharges;
+            document.getElementById('hotelCost').value = tripData.hotelCost;
+            document.getElementById('nights').value = tripData.nights;
+            document.getElementById('people').value = tripData.people;
+            document.getElementById('peopleCount').textContent = tripData.people;
+            
+            // Render lists
+            renderFoodItems();
+            renderActivities();
+            
+            // Calculate initial cost
+            calculateCost();
+            
+            // Add input event listeners to save changes
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', saveData);
+            });
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            // Update tripData with current values
+            tripData.distance = parseFloat(document.getElementById('distance').value) || 0;
+            tripData.fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
+            tripData.mileage = parseFloat(document.getElementById('mileage').value) || 0;
+            tripData.tollCharges = parseFloat(document.getElementById('tollCharges').value) || 0;
+            tripData.hotelCost = parseFloat(document.getElementById('hotelCost').value) || 0;
+            tripData.nights = parseFloat(document.getElementById('nights').value) || 0;
+            tripData.people = parseInt(document.getElementById('people').value) || 6;
+            
+            // Update people count display
+            document.getElementById('peopleCount').textContent = tripData.people;
+            
+            // Save to localStorage
+            localStorage.setItem('roadTripData', JSON.stringify(tripData));
+            
+            // Recalculate cost
+            calculateCost();
+        }
         
         // Render food items
         function renderFoodItems() {
             const container = document.getElementById('foodList');
+            
+            if (tripData.foodItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-utensils"></i>
+                        <p>No food expenses added yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
             container.innerHTML = '';
             
-            foodItems.forEach((item, index) => {
+            tripData.foodItems.forEach((item, index) => {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'list-item';
                 itemElement.innerHTML = `
@@ -596,9 +645,20 @@
         // Render activities
         function renderActivities() {
             const container = document.getElementById('activityList');
+            
+            if (tripData.activities.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-ticket-alt"></i>
+                        <p>No activities added yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
             container.innerHTML = '';
             
-            activities.forEach((item, index) => {
+            tripData.activities.forEach((item, index) => {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'list-item';
                 itemElement.innerHTML = `
@@ -629,12 +689,13 @@
                 return;
             }
             
-            foodItems.push({
+            tripData.foodItems.push({
                 name: nameInput.value.trim(),
                 cost: parseFloat(costInput.value)
             });
             
             renderFoodItems();
+            saveData();
             
             // Reset inputs
             nameInput.value = '';
@@ -651,12 +712,13 @@
                 return;
             }
             
-            activities.push({
+            tripData.activities.push({
                 name: nameInput.value.trim(),
                 cost: parseFloat(costInput.value)
             });
             
             renderActivities();
+            saveData();
             
             // Reset inputs
             nameInput.value = '';
@@ -665,91 +727,92 @@
         
         // Edit food item
         function editFoodItem(index) {
-            const newName = prompt('Enter new meal name:', foodItems[index].name);
+            const newName = prompt('Enter new meal name:', tripData.foodItems[index].name);
             if (newName === null) return;
             
-            const newCost = prompt('Enter new cost:', foodItems[index].cost);
+            const newCost = prompt('Enter new cost:', tripData.foodItems[index].cost);
             if (newCost === null) return;
             
-            foodItems[index] = {
+            tripData.foodItems[index] = {
                 name: newName.trim(),
                 cost: parseFloat(newCost)
             };
             
             renderFoodItems();
+            saveData();
         }
         
         // Edit activity
         function editActivity(index) {
-            const newName = prompt('Enter new activity name:', activities[index].name);
+            const newName = prompt('Enter new activity name:', tripData.activities[index].name);
             if (newName === null) return;
             
-            const newCost = prompt('Enter new cost per person:', activities[index].cost);
+            const newCost = prompt('Enter new cost per person:', tripData.activities[index].cost);
             if (newCost === null) return;
             
-            activities[index] = {
+            tripData.activities[index] = {
                 name: newName.trim(),
                 cost: parseFloat(newCost)
             };
             
             renderActivities();
+            saveData();
         }
         
         // Delete food item
         function deleteFoodItem(index) {
             if (confirm('Are you sure you want to delete this food expense?')) {
-                foodItems.splice(index, 1);
+                tripData.foodItems.splice(index, 1);
                 renderFoodItems();
+                saveData();
             }
         }
         
         // Delete activity
         function deleteActivity(index) {
             if (confirm('Are you sure you want to delete this activity?')) {
-                activities.splice(index, 1);
+                tripData.activities.splice(index, 1);
                 renderActivities();
+                saveData();
             }
         }
         
         // Calculate total cost
         function calculateCost() {
             // Get input values
-            const distance = parseFloat(document.getElementById('distance').value) || 0;
-            const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
-            const mileage = parseFloat(document.getElementById('mileage').value) || 0;
-            const tollCharges = parseFloat(document.getElementById('tollCharges').value) || 0;
-            const hotelCost = parseFloat(document.getElementById('hotelCost').value) || 0;
-            const nights = parseFloat(document.getElementById('nights').value) || 0;
+            const distance = tripData.distance;
+            const fuelPrice = tripData.fuelPrice;
+            const mileage = tripData.mileage;
+            const tollCharges = tripData.tollCharges;
+            const hotelCost = tripData.hotelCost;
+            const nights = tripData.nights;
+            const people = tripData.people;
             
             // Calculate costs
             const fuelCost = (distance / mileage) * fuelPrice;
             const hotelTotal = hotelCost * nights;
             
             // Sum food costs
-            const foodTotal = foodItems.reduce((sum, item) => sum + item.cost, 0);
+            const foodTotal = tripData.foodItems.reduce((sum, item) => sum + item.cost, 0);
             
-            // Sum activity costs (multiplied by 6 people)
-            const activityTotal = activities.reduce((sum, item) => sum + item.cost, 0) * 6;
+            // Sum activity costs (multiplied by number of people)
+            const activityTotal = tripData.activities.reduce((sum, item) => sum + item.cost, 0) * people;
             
             const totalCost = fuelCost + tollCharges + hotelTotal + foodTotal + activityTotal;
-            const perPerson = totalCost / 6;
+            const perPerson = totalCost / people;
             
             // Display results
-            document.getElementById('fuelCost').textContent = fuelCost.toFixed(2);
-            document.getElementById('tollCost').textContent = tollCharges.toFixed(2);
-            document.getElementById('hotelTotal').textContent = hotelTotal.toFixed(2);
-            document.getElementById('foodTotal').textContent = foodTotal.toFixed(2);
-            document.getElementById('activityTotal').textContent = activityTotal.toFixed(2);
-            document.getElementById('totalCost').textContent = totalCost.toFixed(2);
-            document.getElementById('perPerson').textContent = '₹' + perPerson.toFixed(2);
+            document.getElementById('fuelCost').textContent = fuelCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('tollCost').textContent = tollCharges.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('hotelTotal').textContent = hotelTotal.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('foodTotal').textContent = foodTotal.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('activityTotal').textContent = activityTotal.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('totalCost').textContent = totalCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('perPerson').textContent = '₹' + perPerson.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }
         
         // Initialize the app
-        window.onload = function() {
-            renderFoodItems();
-            renderActivities();
-            calculateCost();
-        };
+        window.onload = initApp;
     </script>
 </body>
 </html>
